@@ -1,0 +1,5 @@
+# After compiling libmigo this directory will contained the .gox files 
+# which in turn are needed to compile your own source files.
+*
+# Except this file
+!.gitignore
