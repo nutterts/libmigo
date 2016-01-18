@@ -14,7 +14,7 @@ strreverse(char* begin, char* end) {
 }
 	
 void
-itoa(int64_t value, char* str, int base) {
+itoa(uint64_t value, char* str, int base) {
 	static char num[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 	char* wstr=str;
 	int sign;

@@ -2,10 +2,13 @@
 #include "math.h"
 
 /* Readable names */
-#define runtime_printstring	__go_print_string
-#define runtime_printint	__go_print_int64
-#define runtime_printbool	__go_print_bool
-#define runtime_printfloat	__go_print_double
+#define runtime_printstring		__go_print_string
+#define runtime_printint		__go_print_int64
+#define runtime_printbool		__go_print_bool
+#define runtime_printfloat		__go_print_double
+#define runtime_printpointer	__go_print_pointer
+#define runtime_printuint		__go_print_uint64
+#define runtime_printcomplex	__go_print_complex
 
 /* Functions */
 static void
@@ -30,12 +33,22 @@ __go_print_nl(void)
 }
 
 void
-runtime_printint(int64_t v)
+runtime_printuint(uint64 v)
 {
 	char *str = malloc(22);
 	itoa(v, str, 10);
 	puts(str);
 	free(str);
+}
+
+void
+runtime_printint(int64_t v)
+{
+	if(v < 0) {
+		gwrite("-", 1);
+		v = -v;
+	}
+	runtime_printuint(v);
 }
 
 void
@@ -127,4 +140,36 @@ runtime_printfloat(double v)
 	buf[n+5] = (e/10)%10 + '0';
 	buf[n+6] = (e%10) + '0';
 	gwrite(buf, n+7);
+}
+
+void
+runtime_printhex(uint64 v)
+{
+	static const char *dig = "0123456789abcdef";
+	byte buf[100];
+	int32 i;
+
+	i=nelem(buf);
+	for(; v>0; v/=16)
+		buf[--i] = dig[v%16];
+	if(i == nelem(buf))
+		buf[--i] = '0';
+	buf[--i] = 'x';
+	buf[--i] = '0';
+	gwrite(buf+i, nelem(buf)-i);
+}
+
+void
+runtime_printpointer(void *p)
+{
+	runtime_printhex((uintptr)p);
+}
+
+void
+runtime_printcomplex(_Complex double v)
+{
+	gwrite("(", 1);
+	runtime_printfloat(creal(v));
+	runtime_printfloat(cimag(v));
+	gwrite("i)", 2);
 }

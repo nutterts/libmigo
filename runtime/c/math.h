@@ -1,6 +1,8 @@
 #ifndef __MATH_H__
 #define __MATH_H__
 
+/* From glibc */
+
 /* Unions */
 
 typedef union
@@ -190,6 +192,29 @@ __isnan(double x)
 	hx |= (uint32_t)(lx|(-lx))>>31;
 	hx = 0x7ff00000 - hx;
 	return (int)(((uint32_t)hx)>>31);
+}
+
+typedef union {
+        double _Complex z;
+        double parts[2];
+} double_complex;
+
+inline
+double
+creal(double _Complex z)
+{
+	double_complex w;
+	w.z = z;
+	return (w.parts[0]);
+}
+
+inline
+double
+cimag(double _Complex z)
+{
+	double_complex w;
+	w.z = z;
+	return (w.parts[1]);
 }
 
 #endif

@@ -2,6 +2,8 @@ package main
 
 //import . "runtime/textmode"
 
+
 func main() {
-	println(1.234 / 0.23)
+	var z complex128 = 123.456
+	println(z)
 }

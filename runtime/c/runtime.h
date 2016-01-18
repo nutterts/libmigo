@@ -95,6 +95,10 @@ void *runtime_sbrk(intptr_t increment);
 #define sbrk(increment) runtime_sbrk(increment)
 #define runtime_malloc(size) malloc(size) 
 
+/* Misc defines */
+#define	nelem(x)	(sizeof(x)/sizeof((x)[0]))
+#define	nil		((void*)0)
+
 /* Textmode */
 void cls();
 void putch(unsigned char c);
@@ -104,7 +108,7 @@ void textmode_init();
 
 /* Itoa */
 void strreverse(char* begin, char* end);
-void itoa(int64_t value, char* str, int base);
+void itoa(uint64_t value, char* str, int base);
 
 /* Mini-libc */
 void 		*memcpy(void *restrict s1, const void *restrict s2, size_t n);

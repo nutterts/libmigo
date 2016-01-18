@@ -2,5 +2,7 @@
 *.asm
 *.c.go
 *.krn
-.DS_Store
+*.gox
+*.DS_Store
+
 
