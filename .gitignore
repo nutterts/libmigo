@@ -1,0 +1,6 @@
+*.o
+*.asm
+*.c.go
+*.krn
+.DS_Store
+
